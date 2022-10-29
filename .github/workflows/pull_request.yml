@@ -52,8 +52,7 @@ jobs:
       - name: Run SpecFlow Tests
         uses: cryptic-wizard/run-specflow-tests@v1.3.1
         with:
-          working-directory: src
-          test-assembly-dll: PlaywrightDemo.Tests.UI/bin/Release/net6.0/PlaywrightDemo.Tests.UI.dll
-          test-execution-json: PlaywrightDemo.Tests.UI/bin/Release/net6.0/PlaywrightDemo.Tests.UI.runtimeconfig.json
+          test-assembly-dll: src/PlaywrightDemo.Tests.UI/bin/Release/net5.0/PlaywrightDemo.Tests.UI.dll
+          test-execution-json: src/PlaywrightDemo.Tests.UI/bin/Release/net5.0/PlaywrightDemo.Tests.UI.runtimeconfig.json
           framework: net6.0
           output-html: MyTestResults.html
