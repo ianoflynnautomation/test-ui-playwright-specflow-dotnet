@@ -35,7 +35,7 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: 5.0.x
+          dotnet-version: 6.0.x
 
       - name: Setup Playwright
         uses: microsoft/playwright-github-action@v1.5.4
@@ -52,8 +52,8 @@ jobs:
       - name: Run SpecFlow Tests
         uses: cryptic-wizard/run-specflow-tests@v1.3.1
         with:
-          test-assembly-path: PlaywrightDemo.Tests.UI/bin/Release/net5.0
+          test-assembly-path: PlaywrightDemo.Tests.UI/bin/Release/net6.0
           test-assembly-dll: PlaywrightDemo.Tests.UI.dll
           test-execution-json: PlaywrightDemo.Tests.UI.runtimeconfig.json
-          framework: net5.0
+          framework: net6.0
           output-html: MyTestResults.html
