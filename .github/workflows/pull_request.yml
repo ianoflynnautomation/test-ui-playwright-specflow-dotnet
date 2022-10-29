@@ -32,7 +32,7 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 5.0.x
 
       - name: Setup Playwright
         uses: microsoft/playwright-github-action@v1.5.4
@@ -54,5 +54,5 @@ jobs:
         with:
           test-assembly-dll: src/PlaywrightDemo.Tests.UI/bin/Release/net5.0/PlaywrightDemo.Tests.UI.dll
           test-execution-json: src/PlaywrightDemo.Tests.UI/bin/Release/net5.0/PlaywrightDemo.Tests.UI.runtimeconfig.json
-          framework: net6.0
+          framework: net5.0
           output-html: MyTestResults.html
