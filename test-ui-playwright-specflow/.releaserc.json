@@ -1,0 +1,120 @@
+{
+    "branches": [
+        {
+            "name": "master"
+        },
+        {
+            "name": "pre/rc",
+            "prerelease": "pre/rc",
+            "channel": "rc"
+        },
+        {
+            "name": "beta",
+            "prerelease": "beta",
+            "channel": "true"
+        }
+    ],
+    "plugins": [
+        [
+            "@semantic-release/commit-analyzer",
+            {
+                "preset": "eslint",
+                "releaseRules": [
+                    {
+                        "tag": "Breaking",
+                        "release": "major"
+                    },
+                    {
+                        "tag": "Build",
+                        "release": "minor"
+                    },
+                    {
+                        "tag": "Chore",
+                        "release": "minor"
+                    },
+                    {
+                        "tag": "Fix",
+                        "release": "patch"
+                    },
+                    {
+                        "tag": "Security",
+                        "release": "minor"
+                    },
+                    {
+                        "tag": "New",
+                        "release": "minor"
+                    },
+                    {
+                        "tag": "Upgrade",
+                        "release": "minor"
+                    },
+                    {
+                        "tag": "Update",
+                        "release": "minor"
+                    }
+                ]
+            }
+        ],
+        [
+            "@semantic-release/release-notes-generator",
+            {
+                "present": "enlist",
+                "releaseRules": [
+                    {
+                        "tag": "Breaking",
+                        "release": "major"
+                    },
+                    {
+                        "tag": "Build",
+                        "release": "minor"
+                    },
+                    {
+                        "tag": "Chore",
+                        "release": "minor"
+                    },
+                    {
+                        "tag": "Fix",
+                        "release": "patch"
+                    },
+                    {
+                        "tag": "Security",
+                        "release": "minor"
+                    },
+                    {
+                        "tag": "New",
+                        "release": "minor"
+                    },
+                    {
+                        "tag": "Upgrade",
+                        "release": "minor"
+                    },
+                    {
+                        "tag": "Update",
+                        "release": "minor"
+                    }
+                ]
+            }
+        ],
+        [
+            "@semantic-release/changelog",
+            {
+                "changelogFile": "CHANGELOG.md"
+            }
+        ],
+        "@semantic-release/github",
+        [
+            "@semantic-release/git",
+            {
+                "assets": [
+                    "package.json",
+                    "CHANGELOG.md"
+                ],
+                "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+            }
+        ],
+        "@semantic-release/exec",
+        {
+            "successCmd": "echo \"RELEASE_VERSION=${nextRelease.version}\" >> $GITHUB_ENV"
+        }
+    ]
+}

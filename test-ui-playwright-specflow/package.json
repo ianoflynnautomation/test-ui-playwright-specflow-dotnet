@@ -1,0 +1,23 @@
+{
+  "name": "",
+  "version": "0.0.0-development",
+  "description": "",
+  "private": "",
+  "author": "",
+  "license": "",
+  "repository": "",
+  "dependencies": {
+    "semantic-release": "^19.0.5",
+    "devDependencies": {
+      "@semantic-release/commit-analyzer": "9.0.2",
+      "@semantic-release/github": "8.0.6",
+      "@semantic-release/release-notes-generator": "10.0.0"
+    },
+    "main": "",
+    "husky": {
+      "hooks": {
+        "pre-comit": "cd web && lint-staged"
+      }
+    }
+  }
+}

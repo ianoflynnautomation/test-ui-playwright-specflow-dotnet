@@ -1,0 +1,57 @@
+name: Pull Request Continious Integration
+
+on:
+  push:
+  pull_request:
+    branches: ["master"]
+    paths:
+      - "src/**"
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build
+        run: dotnet build --configuration Release
+
+  test:
+    needs: build
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Setup Playwright
+        uses: microsoft/playwright-github-action@v1.5.4
+
+      - name: Install Dependencies
+        run: dotnet restore
+        working-directory: src
+
+      - name: Install Playwright Dependencies
+        run: npx playwright install --with-deps
+        working-directory: src
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+        working-directory: src
+
+      - name: Run SpecFlow Tests
+        uses: cryptic-wizard/run-specflow-tests@v1.3.1
+        with:
+          test-assembly-dll: PlaywrightDemo.Tests.UI/bin/Release/net6.0/PlaywrightDemo.Tests.UI.dll
+          test-execution-json: PlaywrightDemo.Tests.UI/bin/Release/net6.0/PlaywrightDemo.Tests.UI.runtimeconfig.json
+          framework: net6.0
+          output-html: MyTestResults.html

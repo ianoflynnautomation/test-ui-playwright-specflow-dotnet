@@ -1,0 +1,106 @@
+name: Publish nuget artifact workflow
+
+on:
+  push:
+    branches: ["master"]
+    paths:
+      - "src/**"
+
+env:
+  dotnet_version: 6.0.x
+  node_version: 18.x
+  working_dir: src/PlaywrightDemo.Tests.UI
+
+jobs:
+  paths_filter:
+    runs-on: ubuntu-latest
+    outputs:
+      changes: ${{ steps.changes.outputs.src }}
+    steps:
+      - name: actions checkout
+        uses: actions/checkout@v2
+
+      - uses: dorney/paths-filter@v2
+        id: changes
+        with:
+          fliters: |
+            src:
+              -'src/**'
+
+  publish_nuget_packages:
+    runs-on: ubuntu-latest
+    needs: paths_filter
+    # run only if some files in 'src' folder was changes
+    if: "{{ needs.path_filter.outputs.change }} == 'true'"
+    steps:
+      - name: actions checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Cache node Modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in '~/.npm' on linux/MacOS
+          path: ~/.npm
+          keys: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/packages-lock.json') }}
+          restore-keys: ${{ runner.os }}-build-${{ env.cache-name }-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.node_version}}
+
+      - name: Install Node Dependencies
+        run: npm install
+
+      - name: Get next release node-version
+        id: version
+        env:
+          GITHUB_TOKEN: ${{ env.GH_PKG_TOKEN }}
+          runs: |
+            results=$(npx semantic-release --dry-run --no-ci)
+            npx semantic-release --dry-run --no-ci
+            if grep 'The next release version is' <<< $result
+            then
+              echo "Running senantic-release in dry run mode to extract next semantic version number";
+              echo "NEXT_VERSION=$(echo "$result" | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)/\1/')"
+            else
+              echo "There are no relevant changes, skipping release";
+              echo "::set-ouput name=changesDetectedSinceLastRelease::false"
+            fi
+
+      - name: Setup .NET
+        if: steps.version.outputs.changesDetectedSinceLastRelease == false
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet_version: ${{ env.dotnet_version }}
+
+      - name: Install Dependencies
+        run: dotnet restore
+        working-directory: src
+
+      - name: Build
+        if: steps.version.outputs.changesDetectedSinceLastRelease == false
+        run: dotnet build --configuration Release
+        working-directory: src
+
+      - name: Publish
+        if: steps.version.outputs.changesDetectedSinceLastRelease == false
+        run: dotnet publish --configuration Release
+        working-directory: src
+
+      - name: Upload Artifact
+        if: steps.version.outputs.changesDetectedSinceLastRelease == false
+        uses: actions/upload-artifact@v2
+        with:
+          name: TestProject.${{ env.NEXT_VERSION }}
+          path: ${{ env.working_dir }}//bin/Release/net6.0/pubish
+
+      - name: Fetch Release Version
+        if: steps.version.outputs.changesDetectedSinceLastRelease == false
+        run: npx semantic-release
