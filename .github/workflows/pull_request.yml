@@ -24,6 +24,9 @@ jobs:
     needs: build
     name: Test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src
 
     steps:
       - name: Checkout
@@ -39,20 +42,17 @@ jobs:
 
       - name: Install Dependencies
         run: dotnet restore
-        working-directory: src
 
       - name: Install Playwright Dependencies
         run: npx playwright install --with-deps
-        working-directory: src
 
       - name: Build
         run: dotnet build --configuration Release --no-restore
-        working-directory: src
 
       - name: Run SpecFlow Tests
         uses: cryptic-wizard/run-specflow-tests@v1.3.1
         with:
-          test-assembly-path: /src/PlaywrightDemo.Tests.UI/bin/Release/net5.0
+          test-assembly-path: PlaywrightDemo.Tests.UI/bin/Release/net5.0
           test-assembly-dll: PlaywrightDemo.Tests.UI.dll
           test-execution-json: PlaywrightDemo.Tests.UI.runtimeconfig.json
           framework: net5.0
