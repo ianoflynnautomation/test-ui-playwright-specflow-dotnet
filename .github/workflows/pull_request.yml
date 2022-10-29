@@ -18,6 +18,7 @@ jobs:
 
       - name: Build
         run: dotnet build --configuration Release
+        working-directory: src
 
   test:
     needs: build
