@@ -68,7 +68,7 @@ jobs:
         id: version
         env:
           GITHUB_TOKEN: ${{ env.GH_PKG_TOKEN }}
-        runs: |
+        run: |
           esults=$(npx semantic-release --dry-run --no-ci)
           npx semantic-release --dry-run --no-ci
           if grep 'The next release version is' <<< $result
