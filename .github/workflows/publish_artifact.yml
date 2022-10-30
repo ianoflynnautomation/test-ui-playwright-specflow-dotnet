@@ -17,7 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       changes: ${{ steps.changes.outputs.src }}
-
     steps:
       - name: actions checkout
         uses: actions/checkout@v2
@@ -31,6 +30,9 @@ jobs:
 
   publish_nuget_packages:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      actions: write
     needs: paths_filter
     # run only if some files in 'src' folder was changes
     if: "{{ needs.path_filter.outputs.change }} == 'true'"
@@ -65,18 +67,18 @@ jobs:
       - name: Get next release node-version
         id: version
         env:
-          GITHUB_TOKEN: ${{ env.gh_token }}
-          runs: |
-            results=$(npx semantic-release --dry-run --no-ci)
-            npx semantic-release --dry-run --no-ci
-            if grep 'The next release version is' <<< $result
-            then
-              echo "Running senantic-release in dry run mode to extract next semantic version number";
-              echo "NEXT_VERSION=$(echo "$result" | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)/\1/')" >> $GITHUB_ENV
-            else
-              echo "There are no relevant changes, skipping release";
-              echo "::set-ouput name=changesDetectedSinceLastRelease::false"
-            fi
+          GITHUB_TOKEN: ${{ env.GH_PKG_TOKEN }}
+        runs: |
+          esults=$(npx semantic-release --dry-run --no-ci)
+          npx semantic-release --dry-run --no-ci
+          if grep 'The next release version is' <<< $result
+          then
+            echo "Running senantic-release in dry run mode to extract next semantic version number";
+            echo "NEXT_VERSION=$(echo "$result" | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)/\1/')" >> $GITHUB_ENV
+          else
+            echo "There are no relevant changes, skipping release";
+            echo "::set-ouput name=changesDetectedSinceLastRelease::false"
+          fi
 
       - name: Setup .NET
         if: steps.version.outputs.changesDetectedSinceLastRelease == false
