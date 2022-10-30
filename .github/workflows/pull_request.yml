@@ -47,6 +47,6 @@ jobs:
         run: dotnet build --configuration Release --no-restore
         working-directory: src
         
-      - name: Test
+      - name: Run Tests
         run: dotnet test
         working-directory: src
