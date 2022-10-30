@@ -10,12 +10,14 @@ env:
   dotnet_version: 6.0.x
   node_version: 18.x
   working_dir: src/PlaywrightDemo.Tests.UI
+  gh_token: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   paths_filter:
     runs-on: ubuntu-latest
     outputs:
       changes: ${{ steps.changes.outputs.src }}
+
     steps:
       - name: actions checkout
         uses: actions/checkout@v2
@@ -32,12 +34,14 @@ jobs:
     needs: paths_filter
     # run only if some files in 'src' folder was changes
     if: "{{ needs.path_filter.outputs.change }} == 'true'"
+
     steps:
       - name: actions checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
           persist-credentials: false
+
       - name: Cache node Modules
         uses: actions/cache@v2
         env:
@@ -61,14 +65,14 @@ jobs:
       - name: Get next release node-version
         id: version
         env:
-          GITHUB_TOKEN: ${{ env.GH_PKG_TOKEN }}
+          GITHUB_TOKEN: ${{ env.gh_token }}
           runs: |
             results=$(npx semantic-release --dry-run --no-ci)
             npx semantic-release --dry-run --no-ci
             if grep 'The next release version is' <<< $result
             then
               echo "Running senantic-release in dry run mode to extract next semantic version number";
-              echo "NEXT_VERSION=$(echo "$result" | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)/\1/')"
+              echo "NEXT_VERSION=$(echo "$result" | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)/\1/')" >> $GITHUB_ENV
             else
               echo "There are no relevant changes, skipping release";
               echo "::set-ouput name=changesDetectedSinceLastRelease::false"
@@ -103,4 +107,6 @@ jobs:
 
       - name: Fetch Release Version
         if: steps.version.outputs.changesDetectedSinceLastRelease == false
+        env:
+          GITHUB_TOKEN: ${{ env.gh_token }}
         run: npx semantic-release
