@@ -52,5 +52,5 @@ jobs:
         working-directory: src
         
       - name: Test
-        run: dotnet test --no-restore --verbosity normal
+        run: dotnet test
         working-directory: src/PlaywrightDemo.Tests.UI
