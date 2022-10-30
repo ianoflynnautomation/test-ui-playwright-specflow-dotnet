@@ -4,8 +4,10 @@ on:
   push:
   pull_request:
     branches: ["master"]
-    paths:
-      - "src/**"
+    
+defaults:
+  run:
+    working-directory: src
 
 jobs:
   build:
