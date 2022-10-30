@@ -53,4 +53,4 @@ jobs:
         
       - name: Test
         run: dotnet test
-        working-directory: src/PlaywrightDemo.Tests.UI
+        working-directory: src
