@@ -50,12 +50,7 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
         working-directory: src
-
-      - name: Run SpecFlow Tests
-        uses: cryptic-wizard/run-specflow-tests@v1.3.1
-        with:
-          test-assembly-path: src
-          test-assembly-dll: PlaywrightDemo.Tests.UI/bin/Release/net6.0/PlaywrightDemo.Tests.UI.dll
-          test-execution-json: PlaywrightDemo.Tests.UI/bin/Release/net6.0/PlaywrightDemo.Tests.UI.runtimeconfig.json
-          framework: net6.0
-          output-html: MyTestResults.html
+        
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
+        working-directory: src
