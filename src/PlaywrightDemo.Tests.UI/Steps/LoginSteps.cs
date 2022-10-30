@@ -46,7 +46,7 @@ namespace PlaywrightDemo.Tests.UI.Features
         }
 
         [Then(@"the user should not be logged in")]
-        public async void ThenTheUserShouldNotBeLoggedIn()
+        public async Task ThenTheUserShouldNotBeLoggedIn()
         {
             var errorMessageDisplayed = await _loginPage.GetLoginErrorMessage();
             errorMessageDisplayed.Should().Be("Epic sadface: Sorry, this user has been locked out.");
