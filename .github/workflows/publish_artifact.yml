@@ -52,10 +52,7 @@ jobs:
           # npm cache files are stored in '~/.npm' on linux/MacOS
           path: ~/.npm
           keys: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/packages-lock.json') }}
-          restore-keys: ${{ runner.os }}-build-${{ env.cache-name }-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-
+          restore-keys: ${{ runner.os }}-build-${{ env.cache-name }-${{ runner.os }}-build-${{ runner.os }}-
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
