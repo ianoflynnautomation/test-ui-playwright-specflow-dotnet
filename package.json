@@ -13,5 +13,9 @@
     "@semantic-release/github": "^8.0.6",
     "@semantic-release/npm": "^9.0.1",
     "semantic-release": "^19.0.5"
+  },
+  "dependencies": {
+    "@semantic-release/commit-analyzer": "github:semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator": "github:semantic-release/release-notes-generator"
   }
 }
