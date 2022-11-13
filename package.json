@@ -5,5 +5,8 @@
   "private": "",
   "author": "",
   "license": "",
-  "repository": ""
+  "repository": "",
+  "devDependencies": {
+    "@semantic-release/github": "^8.0.6"
+  }
 }
