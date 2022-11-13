@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@semantic-release/commit-analyzer": "github:semantic-release/commit-analyzer",
-    "@semantic-release/release-notes-generator": "github:semantic-release/release-notes-generator"
+    "@semantic-release/release-notes-generator": "github:semantic-release/release-notes-generator",
+    "conventional-changelog-eslint": "^3.0.9"
   }
 }
