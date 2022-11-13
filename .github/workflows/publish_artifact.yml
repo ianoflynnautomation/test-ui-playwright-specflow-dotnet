@@ -34,7 +34,7 @@ jobs:
       actions: write
     needs: paths_filter
     # run only if some files in 'src' folder was changes
-    if: "{{ needs.path_filter.outputs.change }} == 'true'"
+    #if: "{{ needs.path_filter.outputs.change }} == 'true'"
 
     steps:
       - name: actions checkout
