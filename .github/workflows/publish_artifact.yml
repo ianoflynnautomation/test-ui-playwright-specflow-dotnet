@@ -8,7 +8,7 @@ on:
 
 env:
   dotnet_version: 6.0.x
-  node_version: 18.x
+  node_version: 16.x
   working_dir: src/PlaywrightDemo.Tests.UI
 
 jobs:
@@ -17,9 +17,7 @@ jobs:
     outputs:
       changes: ${{ steps.changes.outputs.src }}
     steps:
-      - name: actions checkout
-        uses: actions/checkout@v2
-
+      - uses: actions/checkout@v2
       - uses: dorny/paths-filter@v2.11.1
         id: changes
         with:
