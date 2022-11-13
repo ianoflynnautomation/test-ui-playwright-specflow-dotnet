@@ -20,7 +20,7 @@ jobs:
       - name: actions checkout
         uses: actions/checkout@v2
 
-      - uses: dorney/paths-filter@v2
+      - uses: dorny/paths-filter@v2.11.1
         id: changes
         with:
           fliters: |
