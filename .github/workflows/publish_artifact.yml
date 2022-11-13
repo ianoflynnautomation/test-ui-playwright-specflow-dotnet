@@ -27,9 +27,6 @@ jobs:
 
   publish_nuget_packages:
     runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      actions: write
     needs: paths_filter
     # run only if some files in 'src' folder was changes
     #if: "{{ needs.path_filter.outputs.change }} == 'true'"
