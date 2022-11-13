@@ -1,86 +1,52 @@
-name: Publish nuget artifact workflow
+name: Pull Request Continious Integration
 
 on:
   push:
+  pull_request:
     branches: ["master"]
-    paths:
-      - "src/**"
-
-env:
-  dotnet_version: 6.0.x
-  node_version: 18.x
-  working_dir: src/PlaywrightDemo.Tests.UI
-  gh_token: ${{ secrets.GITHUB_TOKEN }}
-
+    
 jobs:
-  paths_filter:
+  build:
+    name: Build
     runs-on: ubuntu-latest
-    outputs:
-      changes: ${{ steps.changes.outputs.src }}
-    steps:
-      - name: actions checkout
-        uses: actions/checkout@v2
-
-      - uses: dorney/paths-filter@v2
-        id: changes
-        with:
-          fliters: |
-            src:
-              -'src/**'
-
-  publish_nuget_packages:
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      actions: write
-    needs: paths_filter
-    # run only if some files in 'src' folder was changes
-    if: "{{ needs.path_filter.outputs.change }} == 'true'"
 
     steps:
-      - name: actions checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          persist-credentials: false
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ env.node_version}}
+      - name: Build
+        run: dotnet build --configuration Release
+        working-directory: src
 
-      - name: Install Node Dependencies
-        run: npm install
+  test:
+    needs: build
+    name: Test
+    runs-on: ubuntu-latest
 
-      - name: Setup .NET
-        if: steps.version.outputs.changesDetectedSinceLastRelease == false
-        uses: actions/setup-dotnet@v1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v2
         with:
-          dotnet_version: ${{ env.dotnet_version }}
+          dotnet-version: 6.0.x
+
+      - name: Setup Playwright
+        uses: microsoft/playwright-github-action@v1.5.4
 
       - name: Install Dependencies
         run: dotnet restore
         working-directory: src
 
+      - name: Install Playwright Dependencies
+        run: npx playwright install --with-deps
+        working-directory: src
+
       - name: Build
-        if: steps.version.outputs.changesDetectedSinceLastRelease == false
-        run: dotnet build --configuration Release
+        run: dotnet build --configuration Release --no-restore
         working-directory: src
-
-      - name: Publish
-        if: steps.version.outputs.changesDetectedSinceLastRelease == false
-        run: dotnet publish --configuration Release
+        
+      - name: Test
+        run: dotnet test
         working-directory: src
-
-      - name: Upload Artifact
-        if: steps.version.outputs.changesDetectedSinceLastRelease == false
-        uses: actions/upload-artifact@v2
-        with:
-          name: TestProject.${{ env.NEXT_VERSION }}
-          path: ${{ env.working_dir }}//bin/Release/net6.0/pubish
-
-      - name: Fetch Release Version
-        if: steps.version.outputs.changesDetectedSinceLastRelease == false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
