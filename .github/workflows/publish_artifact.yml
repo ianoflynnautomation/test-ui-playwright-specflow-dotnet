@@ -44,16 +44,6 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Cache node Modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          # npm cache files are stored in '~/.npm' on linux/MacOS
-          path: ~/.npm
-          #keys: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/packages-lock.json') }}
-          #restore-keys: ${{ runner.os }}-build-${{ env.cache-name }-${{ runner.os }}-build-${{ runner.os }}-
-
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
@@ -61,22 +51,6 @@ jobs:
 
       - name: Install Node Dependencies
         run: npm install
-
-      - name: Get next release node-version
-        id: version
-        env:
-          GITHUB_TOKEN: ${{ env.GH_PKG_TOKEN }}
-        run: |
-          esults=$(npx semantic-release --dry-run --no-ci)
-          npx semantic-release --dry-run --no-ci
-          if grep 'The next release version is' <<< $result
-          then
-            echo "Running senantic-release in dry run mode to extract next semantic version number";
-            echo "NEXT_VERSION=$(echo "$result" | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)/\1/')" >> $GITHUB_ENV
-          else
-            echo "There are no relevant changes, skipping release";
-            echo "::set-ouput name=changesDetectedSinceLastRelease::false"
-          fi
 
       - name: Setup .NET
         if: steps.version.outputs.changesDetectedSinceLastRelease == false
@@ -108,5 +82,5 @@ jobs:
       - name: Fetch Release Version
         if: steps.version.outputs.changesDetectedSinceLastRelease == false
         env:
-          GITHUB_TOKEN: ${{ env.gh_token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
