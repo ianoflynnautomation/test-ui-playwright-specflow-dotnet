@@ -76,11 +76,6 @@ jobs:
         run: dotnet build --configuration Release
         working-directory: src
 
-      - name: Pack
-        if: steps.version.outputs.changesDetectedSinceLastRelease == false
-        run: dotnet pack --configuration Release -p:PackageVersion=${{ env.NEXT_VERSION }}
-        working-directory: src
-
       - name: Publish
         if: steps.version.outputs.changesDetectedSinceLastRelease == false
         run: dotnet publish --configuration Release
