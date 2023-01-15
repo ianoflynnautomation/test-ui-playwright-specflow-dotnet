@@ -67,12 +67,13 @@ public interface IExample
 /// Use camel-case style for property/field naming.
 /// Public or protected property/field name begins with upper case.
 /// </summary>
+
 public void PublicPropertyName {get; set; }
 
 protected void ProtectedPropertyName {get; set; }
 
 /// <Summary>
-/// Use c
+/// Use camel-case style for method naming.
 /// Private field name begins with lower case.
 /// </summary>
 private void privatePropertyName;
@@ -157,14 +158,14 @@ public void PassingParametersToMethodFormatting()
 {
     /// DON'T DO
     
-    Do(new SomeLongTypeNameTypeForEXample(), new SomeLongTypeNameTypeForEXample(), new SomeLongTypeNameTypeForEXample(), new SomeLongTypeNameTypeForEXample());
+    Do(new SomeLongTypeNameForExample(), new SomeLongTypeNameForExample(), new SomeLongTypeNameForExample(), new SomeLongTypeNameForExample());
     
     /// DO
     
-    Do(new SomeLongTypeNameTypeForEXample(), 
-       new SomeLongTypeNameTypeForEXample(), 
-       new SomeLongTypeNameTypeForEXample(), 
-       new SomeLongTypeNameTypeForEXample());   
+    Do(new SomeLongTypeNameForExample(), 
+       new SomeLongTypeNameForExample(), 
+       new SomeLongTypeNameForExample(), 
+       new SomeLongTypeNameForExample());   
 }
 ```
 11. Use Switch expressions instead of if-else-if wherever possible to make code simple and readable.
