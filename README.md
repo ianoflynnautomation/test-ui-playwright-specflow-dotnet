@@ -89,7 +89,6 @@ public void PublicMethodName()
 3. Page Object Model is code representation of particular page of the application. Therefore, it should contain only elements and methods that are related to a particular page.
 4. Use regions in POMs to device code into logical structures.
 ```
-
 #region Selectors
 
 # endregion
@@ -105,7 +104,6 @@ public void PublicMethodName()
 #region Methods
 
 # endregion
-
 ```
 
 5. Methods inside POMs should do only one logical action
@@ -119,7 +117,7 @@ public void PublicMethodName()
 | '                     | \&apos;     |
 | &                     | \&amp;      |
 
-9. Variables names should be meaningful and not shortened. 
+7. Variables names should be meaningful and not shortened. 
 ```c#
 /// <Summary>
 /// Variable names should be meaningful and not shortened.
@@ -133,7 +131,7 @@ public void VariablesNames()
   var documentModifcationDate = DateTime.Now;
 }
 ```
-12. If some magic number or magic string is used only in a single place - create local constant with meaningful name
+8. If some magic number or magic string is used only in a single place - create local constant with meaningful name
 ```c#
 /// <Summary>
 /// DO
@@ -152,3 +150,25 @@ public void LocalConstantsUsage()
   SomeMethod(30);
 }
 ```
+9. Parameters in methods and constructors should be aligned and readable.
+10. Passed Parameters to the method should be aligned, formatted and readable.
+```c#
+public void PassingParametersToMethodFormatting()
+{
+    /// DON'T DO
+    
+    Do(new SomeLongTypeNameTypeForEXample(), new SomeLongTypeNameTypeForEXample(), new SomeLongTypeNameTypeForEXample(), new SomeLongTypeNameTypeForEXample());
+    
+    /// DO
+    
+    Do(new SomeLongTypeNameTypeForEXample(), 
+       new SomeLongTypeNameTypeForEXample(), 
+       new SomeLongTypeNameTypeForEXample(), 
+       new SomeLongTypeNameTypeForEXample());   
+}
+```
+11. Use Switch expressions instead of if-else-if wherever possible to make code simple and readable.
+12. Code should be logically split into commits.
+13. Solution should be built before creating Pull Requests without errors or warnings.
+14. After Pull Request is created, all GitActions checks should pass.
+
