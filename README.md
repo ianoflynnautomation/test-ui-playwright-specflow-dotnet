@@ -172,3 +172,6 @@ public void PassingParametersToMethodFormatting()
 13. Solution should be built before creating Pull Requests without errors or warnings.
 14. After Pull Request is created, all GitActions checks should pass.
 
+## Support
+
+Please create any support requests via a properly labeled issues in this repository.
