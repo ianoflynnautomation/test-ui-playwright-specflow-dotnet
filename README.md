@@ -1,18 +1,13 @@
-# Playwright for dotnet Demo with Specflow
+# Test Automation UI Project using Playwright and Specflow
 
 ## Summary
-
-Sample UI automation project using Playwright, Specflow, .Net and C#
-
-Using Github Actions for Continuous Integration.
-
-Playwright dotnet: https://playwright.dev/dotnet/
+Test Automation Sample Project using Playwright and Specflow
 
 ## Repository Ownership
 
 | Team | Contact Person |
 | ---- | ------------------------------------|
-Team| Ian O'Flynn|
+|Team Owner| Ian O'Flynn|
 
 ## Dev Instructions
 
@@ -67,9 +62,7 @@ public interface IExample
 /// Use camel-case style for property/field naming.
 /// Public or protected property/field name begins with upper case.
 /// </summary>
-
 public void PublicPropertyName {get; set; }
-
 protected void ProtectedPropertyName {get; set; }
 
 /// <Summary>
@@ -84,6 +77,7 @@ private void privatePropertyName;
 /// </summary>
 public void PublicMethodName()
 {
+
 }
 ```
 
