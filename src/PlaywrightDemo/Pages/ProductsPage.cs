@@ -12,8 +12,16 @@ namespace PlaywrightDemo.Pages
             _page = page;
         }
 
-        public async Task<string> Title() => await _page.InnerTextAsync("text=Products");
+        /// <summary>
+        /// Gets the page title inner text.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<string> GetTitle() => await _page.InnerTextAsync("text=Products");
 
-        public async Task ClickSauceLabsBackpackButton() => await _page.ClickAsync("id=add-to-cart-sauce-labs-backpack");
+        /// <summary>
+        /// Clicks the back button.
+        /// </summary>
+        /// <returns></returns>
+        public async Task ClickBack() => await _page.ClickAsync("id=add-to-cart-sauce-labs-backpack");
     }
 }

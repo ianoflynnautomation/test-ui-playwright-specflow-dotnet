@@ -41,14 +41,14 @@ namespace PlaywrightDemo.Tests.UI.Features
         [Then(@"the user should be logged in successfully")]
         public async Task ThenTheUserShouldBeLoggedInSuccessfully()
         {
-            string expectedTitle = await _productsPage.Title();
+            string expectedTitle = await _productsPage.GetTitle();
              expectedTitle.Should().Be("PRODUCTS");
         }
 
         [Then(@"the user should not be logged in")]
         public async Task ThenTheUserShouldNotBeLoggedIn()
         {
-            var errorMessageDisplayed = await _loginPage.GetLoginErrorMessage();
+            var errorMessageDisplayed = await _loginPage.GetErrorMessage();
             errorMessageDisplayed.Should().Be("Epic sadface: Sorry, this user has been locked out.");
         }
     }
