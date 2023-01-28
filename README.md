@@ -166,6 +166,57 @@ public void PassingParametersToMethodFormatting()
 12. Code should be logically split into commits.
 13. Solution should be built before creating Pull Requests without errors or warnings.
 14. After Pull Request is created, all GitActions checks should pass.
+15. Use LINQ where possible to make code simple and readable.
+16. Use Switch expressions instead of if-else-if wherever possible to make code simple and readable.
+```c#
+// DON'T DO
+if(_action.ToLower(.Equals(Open)))
+{
+  _browser.Page.ClickOpenButton();
+}
+else if (_action.ToLower(.Equals(Close)))
+{
+  _browser.Page.ClickCloseButton();
+}
+else if (_action.ToLower(.Equals(Edit)))
+{
+  _browser.Page.ClickEditButton();
+}
+
+// DO
+switch (_action)
+{
+  case {} when _action.Equals(Open, StringComparison.InvariantCultureIgnoreCase):
+   _browser.Page.ClickOpenButton();
+   break;
+   case {} when _action.Equals(Close, StringComparison.InvariantCultureIgnoreCase):
+   _browser.Page.ClickCloseButton();
+   break;
+   case {} when _action.Equals(Edit, StringComparison.InvariantCultureIgnoreCase):
+   _browser.Page.ClickEditButton();
+   break;
+}
+```
+#### Page Object Models
+
+Method naming convention should be based on user intent. avoid too much granularity and avoid prefixing each method.
+```c#
+/// DON'T 
+page.ClickNewButton();
+page.ClickSave();
+page.ClickEditButton();
+
+// DO
+page.Add();
+page.Save();
+page.Edit();
+```
+#### Assertions
+
+Perform assertions within the test case and not within the POM. Methods within POMs should only be retrieving values.
+Use fluent assertions for assertions.
+
+
 
 ## Support
 
