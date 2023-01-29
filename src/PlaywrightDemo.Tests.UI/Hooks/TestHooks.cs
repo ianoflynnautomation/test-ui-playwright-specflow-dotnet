@@ -31,13 +31,11 @@ namespace PlaywrightDemo.Tests.UI.Hooks
             _objectContainer.RegisterInstanceAs(page);
         }
 
-
         [AfterScenario]
         public async Task AfterScenario()
         {
             var browser = _objectContainer.Resolve<IBrowser>();
             await browser.CloseAsync();
         }
-        
     }
 }

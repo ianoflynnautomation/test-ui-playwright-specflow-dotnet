@@ -21,7 +21,7 @@ namespace PlaywrightDemo.Tests.UI.Features
         [Given(@"I navigate to the website home page")]
         public async Task GivenINavigateToTheWebsiteHomePageAsync()
         {
-            await _loginPage.GoTo(); 
+            await _loginPage.GoTo();
         }
 
         [When(@"I login with a valid users credentials (.*) (.*)")]
@@ -34,22 +34,21 @@ namespace PlaywrightDemo.Tests.UI.Features
         public async Task WhenILoginWithUsersCredentials(Table table)
         {
             var testData = table.CreateInstance<User>();
-            await _loginPage.Login(testData.UserName, testData.Password); ;
+            await _loginPage.Login(testData.UserName, testData.Password);
         }
-
 
         [Then(@"the user should be logged in successfully")]
         public async Task ThenTheUserShouldBeLoggedInSuccessfully()
         {
-            string expectedTitle = await _productsPage.GetTitle();
-             expectedTitle.Should().Be("PRODUCTS");
+            string actualTitle = await _productsPage.GetTitle();
+            actualTitle.Should().Be("PRODUCTS");
         }
 
         [Then(@"the user should not be logged in")]
         public async Task ThenTheUserShouldNotBeLoggedIn()
         {
-            var errorMessageDisplayed = await _loginPage.GetErrorMessage();
-            errorMessageDisplayed.Should().Be("Epic sadface: Sorry, this user has been locked out.");
+            var actualErrorMessage = await _loginPage.GetErrorMessage();
+            actualErrorMessage.Should().Be("Epic sadface: Sorry, this user has been locked out.");
         }
     }
 }

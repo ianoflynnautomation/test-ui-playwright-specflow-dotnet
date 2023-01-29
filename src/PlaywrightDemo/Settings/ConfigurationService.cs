@@ -27,7 +27,6 @@ namespace Practice.One.UI.Settings
             return char.ToLower(text[0]) + text.Substring(1);
         }
 
-
         public static WebSettings GetWebSettings()
         {
             var result = Root.GetSection("websettings").Get<WebSettings>();
@@ -47,7 +46,7 @@ namespace Practice.One.UI.Settings
             {
                 builder.AddJsonFile(settingsFile, optional: true, reloadOnChange: true);
             }
-
+            
             return builder.Build();
         }
     }

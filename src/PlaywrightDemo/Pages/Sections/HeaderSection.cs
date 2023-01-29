@@ -16,6 +16,6 @@ namespace PlaywrightDemo.Pages.Sections
         /// Clicks the shopping cart icon.
         /// </summary>
         public async Task OpenShoppingCart() => await _page.ClickAsync("#shopping_cart_container a");
-        
+
     }
 }

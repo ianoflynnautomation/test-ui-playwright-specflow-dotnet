@@ -6,6 +6,7 @@ namespace PlaywrightDemo.Pages
     public class LoginPage
     {
         private readonly IPage _page;
+        
         public LoginPage(IPage page)
         {
             _page = page;

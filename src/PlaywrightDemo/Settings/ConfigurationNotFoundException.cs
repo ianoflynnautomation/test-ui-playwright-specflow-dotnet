@@ -11,7 +11,7 @@ namespace Practice.One.UI.Settings.Configuration
         {
         }
 
-        public ConfigurationNotFoundException(string configurationType) 
+        public ConfigurationNotFoundException(string configurationType)
             : base($"Configuration section for {configurationType} was not found. Please add the section")
         {
         }
