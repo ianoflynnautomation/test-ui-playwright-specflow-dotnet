@@ -1,5 +1,7 @@
 # Test Automation UI Project using Playwright and Specflow
 
+![Publish nuget artifacts workflow](https://github.com/ianoflynnautomation/test-ui-playwright-specflow-dotnet/actions/workflows/publish_artifact.yml/badge.svg) ![Pull Request Continuous Integration](https://github.com/ianoflynnautomation/test-ui-playwright-specflow-dotnet/actions/workflows/pull_request.yml/badge.svg)
+
 ## Summary
 Test Automation Sample Project using Playwright and Specflow
 
