@@ -216,6 +216,7 @@ page.EditItem();
 #### Assertions
 
 Assertion methods naming convention should be based on user intent. Avoid too much granularity and avoid prefixing each method.
+Assertions methods should begin with Validate, Verify or Assert.
 Use Validation assertions fluent assertions for assertions.
 
 ```c#
