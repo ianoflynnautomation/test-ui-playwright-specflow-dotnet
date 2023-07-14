@@ -201,7 +201,7 @@ switch (_action)
 ```
 #### Page Object Models
 
-Method naming convention should be based on user intent. avoid too much granularity and avoid prefixing each method.
+Method naming convention should be based on user intent. Avoid too much granularity and avoid prefixing each method.
 ```c#
 /// DON'T 
 page.ClickNewButton();
@@ -215,9 +215,19 @@ page.EditItem();
 ```
 #### Assertions
 
-Perform assertions within the test case and not within the POM. Methods within POMs should only be retrieving values.
-Use fluent assertions for assertions.
+Assertion methods naming convention should be based on user intent. Avoid too much granularity and avoid prefixing each method.
+Use Validation assertions fluent assertions for assertions.
 
+```c#
+/// DON'T 
+page.TextShouldContain();
+page.ItemShouldNotBeInTheList();
+
+// DO
+page.ValidateTextIs();
+page.VerifyItemCreated();
+page.VerifyItemDeleted();
+```
 
 
 ## Support
