@@ -174,28 +174,28 @@ public void PassingParametersToMethodFormatting()
 // DON'T DO
 if(_action.ToLower(.Equals(Open)))
 {
-  _browser.Page.ClickOpenButton();
+  Page.OpenItem();
 }
 else if (_action.ToLower(.Equals(Close)))
 {
-  _browser.Page.ClickCloseButton();
+  Page.CloseItem();
 }
 else if (_action.ToLower(.Equals(Edit)))
 {
-  _browser.Page.ClickEditButton();
+  Page.EditItem();
 }
 
 // DO
 switch (_action)
 {
   case {} when _action.Equals(Open, StringComparison.InvariantCultureIgnoreCase):
-   _browser.Page.ClickOpenButton();
+   Page.OpenItem();
    break;
    case {} when _action.Equals(Close, StringComparison.InvariantCultureIgnoreCase):
-   _browser.Page.ClickCloseButton();
+   Page.CloseItem();
    break;
    case {} when _action.Equals(Edit, StringComparison.InvariantCultureIgnoreCase):
-   _browser.Page.ClickEditButton();
+   Page.EditItem();
    break;
 }
 ```
