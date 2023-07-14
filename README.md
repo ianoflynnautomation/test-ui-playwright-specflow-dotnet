@@ -209,9 +209,9 @@ page.ClickSave();
 page.ClickEditButton();
 
 // DO
-page.Add();
-page.Save();
-page.Edit();
+page.AddItem();
+page.SaveItem();
+page.EditItem();
 ```
 #### Assertions
 
